@@ -1,5 +1,6 @@
 const fs = require('fs');
 const data = require('./data.json')
+const { age } = require('./utils')
 
 //show
 exports.show = function (req, res){
@@ -12,7 +13,15 @@ exports.show = function (req, res){
 
     if(!foundInstructor) return res.send('Instructor not found')
 
-    return res.send(foundInstructor)
+
+    const instructor = {
+        ...foundInstructor,
+        age: age(foundInstructor.birth),
+        services: foundInstructor.services.split(','),
+        created_at: "",
+    }
+
+    return res.render("instructors/show", {instructor})
 }
 //create
 exports.post = function (req, res){
@@ -26,7 +35,7 @@ exports.post = function (req, res){
        }
     }
 
-    let {avatar_url,birth,services,gender,name} = req.body //desestruturando o req.body
+    let {avatar_url,birth,name,services,gender} = req.body //desestruturando o req.body
 
     birth = Date.parse(birth)
     const created_at = Date.now()
