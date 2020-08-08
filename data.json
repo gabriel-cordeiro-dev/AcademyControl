@@ -1,15 +1,6 @@
 {
   "instructors": [
     {
-      "id": 1,
-      "avatar_url": "https://source.unsplash.com/collection/3465564/500x500",
-      "name": "Gabriel Cordeiro",
-      "birth": 772588800000,
-      "gender": "M",
-      "services": "natação, crossfit",
-      "created_at": 1596893622291
-    },
-    {
       "id": "2",
       "avatar_url": "https://source.unsplash.com/collection/3465564/500x500",
       "name": "Gabriel Cordeiro",
