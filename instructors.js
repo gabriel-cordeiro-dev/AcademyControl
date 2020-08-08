@@ -1,6 +1,6 @@
 const fs = require('fs');
 const data = require('./data.json')
-const { age } = require('./utils')
+const { age, date } = require('./utils')
 
 //show
 exports.show = function (req, res){
@@ -18,14 +18,14 @@ exports.show = function (req, res){
         ...foundInstructor,
         age: age(foundInstructor.birth),
         services: foundInstructor.services.split(','),
-        created_at: "",
+        created_at: new Intl.DateTimeFormat('pt-BR').format(foundInstructor.created_at),
     }
 
     return res.render("instructors/show", {instructor})
 }
 //create
 exports.post = function (req, res){
-    
+
     //realizando uma estrutura de validação
     const keys = Object.keys(req.body)//o keys criou um array com as chaves dos objetos
 
@@ -48,7 +48,7 @@ exports.post = function (req, res){
         birth,
         gender,
         services,
-        created_at
+        created_at,
     }) // aqui ele retorna um array com um objeto dentro [{...}]
 
     fs.writeFile('data.json', JSON.stringify(data, null, 2), function(err){
@@ -60,5 +60,50 @@ exports.post = function (req, res){
     //return res.send(req.body)
 }
 //update
+exports.edit = function (req, res){
+    //req.params
+    const { id } = req.params
 
-//delete
+    const foundInstructor = data.instructors.find(function (instructor){
+        return instructor.id == id
+    })
+
+    if(!foundInstructor) return res.send('Instructor not found')
+
+    const instructor = {
+        ...foundInstructor,
+        birth: date(foundInstructor.birth)
+    }
+    
+
+    return res.render('instructors/edit', {instructor})
+}
+
+exports.put = function (req, res){
+    //req.body
+    const { id } = req.body
+    let index = 0
+
+    const foundInstructor = data.instructors.find(function (instructor, foundIndex){
+        if (id == instructor.id) {
+            index = foundIndex
+            return true
+        }
+    })
+
+    if(!foundInstructor) return res.send('Instructor not found')
+
+    const instructor = {
+        ...foundInstructor,
+        ...req.body,
+        birth: Date.parse(req.body.birth)
+    }
+
+    data.instructors[index] = instructor
+
+    fs.writeFile('data.json', JSON.stringify(data, null, 2), function(err){
+        if (err) return res.send('Write error!')
+
+        return res.redirect(`/instructors/${id}`)
+    })
+}
