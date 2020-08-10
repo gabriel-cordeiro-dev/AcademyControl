@@ -1,45 +1,30 @@
 {% extends 'layout.njk' %}
 
 {% block content %}
-<div class="card">
-    <section 
-        class="avatar" 
-        style="background: url(https://source.unsplash.com/collection/3465564/500x500) no-repeat center center / cover">
-    </section>
+<div class="card table-container">
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Instructor</th>
+                <th>Atendimento</th>
+                <th>Ação</th>
+            </tr>
 
-    <section class="details">
-        <h3>Detalhes</h3>
+        </thead>
+        <tbody>
 
-        <div class="item">
-            <div>Instrutor</div>
-            <div>Gabriel Cordeiro</div>
-        </div>
-
-        <div class="item">
-            <div>Idade</div>
-            <div>26</div>
-        </div>
-
-        <div class="item">
-            <div>Sexo</div>
-            <div>Masculino</div>
-        </div>
-
-        <div class="item">
-            <div>Especialidade</div>
-            <div>
-                <span>Musculação</span>
-                <span>Preparação Física</span>
-                <span>Crossfit</span>
-            </div>
-        </div>
-
-        <div class="item">
-            <div>Desde</div>
-            <div>01/01/2018</div>
-        </div>
-
-    </section>
+            {% for instructor in instructors %}
+            <tr>
+                <td>
+                    <span style="background-image: url({{ instructor.avatar_url }}) " ></span>
+                </td>
+                <td>{{instructor.name}}</td>
+                <td>{{instructor.services}}</td>
+                <td><a href="/instructors/{{instructor.id}}">ver</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock content %}
