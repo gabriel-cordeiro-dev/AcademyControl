@@ -1,4 +1,17 @@
 {
+  "members": [
+    {
+      "id": 1,
+      "avatar_url": "https://source.unsplash.com/collection/3465564/500x500",
+      "name": "Gabriel Cordeiro",
+      "email": "gabriel.cord18@gmail.com",
+      "birth": 772588800000,
+      "gender": "M",
+      "blood": "A+",
+      "weight": "110",
+      "height": "174"
+    }
+  ],
   "instructors": [
     {
       "id": 2,

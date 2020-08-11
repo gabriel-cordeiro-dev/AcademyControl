@@ -1,6 +1,6 @@
 const fs = require('fs');
-const data = require('./data.json')
-const { age, date } = require('./utils')
+const data = require('../data.json')
+const { age, date } = require('../utils')
 
 exports.index = function (req, res){
 
@@ -29,7 +29,13 @@ exports.show = function (req, res){
 
     return res.render("instructors/show", {instructor})
 }
+
 //create
+exports.create = function (req, res){
+    return res.render('instructors/create')
+}
+
+//post
 exports.post = function (req, res){
 
     //realizando uma estrutura de validação
@@ -78,7 +84,7 @@ exports.edit = function (req, res){
 
     const instructor = {
         ...foundInstructor,
-        birth: date(foundInstructor.birth)
+        birth: date(foundInstructor.birth).iso
     }
     
 
